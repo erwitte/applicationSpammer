@@ -38,7 +38,7 @@ def fetch_job_json():
 
 
 def extract_relevant_data(json_entry):
-    titel_arbeitgeber_refnr = json_entry['titel'] + "," + json_entry['arbeitgeber'] + "," + json_entry['refnr']
+    titel_arbeitgeber_refnr = json_entry['titel'], json_entry['arbeitgeber'], json_entry['refnr']
     return titel_arbeitgeber_refnr
 
 
@@ -46,8 +46,5 @@ def get_relevant_data():
     job_data = fetch_job_json()
     relevant_data = []
     for index in range(len(job_data["stellenangebote"])):
-        relevant_data.append([extract_relevant_data(job_data["stellenangebote"][index])])
+        relevant_data.append(extract_relevant_data(job_data["stellenangebote"][index]))
     return relevant_data
-
-if __name__ == "__main__":
-    relevant_data = get_relevant_data()

@@ -2,17 +2,28 @@ import re
 import Json_Extractor
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+import time
 
 
 def extract_email_and_name(titel_arbeitgeber_refnr):
     driver = webdriver.Firefox()
-    driver.get("https://www.arbeitsagentur.de/jobsuche/suche?angebotsart=1&was=Backend&wo=Osnabr%C3%BCck&umkreis=50&id=10000-1196769186-S")
-    input("captcha")
-    titel_arbeitgeber_ansprechpartner_email = []
-    email = driver.find_element(By.ID, "detail-bewerbung-mail").text
-    ansprechparner = extract_name(driver.find_element(By.ID, "detail-bewerbung-adresse"))
-    print(ansprechparner)
+    url = "https://www.arbeitsagentur.de/jobsuche/jobdetail/"
+    for index in range(len(titel_arbeitgeber_refnr)):
+        refnr = titel_arbeitgeber_refnr[index][2]
+        driver.get(url + str(refnr))
+        driver.implicitly_wait(4)
+        titel_arbeitgeber_ansprechpartner_email = []
+        try:
+            if driver.find_element(By.ID, "kontaktdaten-captcha-image"):
+                input("captcha")
+        except:
+            try:
+                email = driver.find_element(By.ID, "detail-bewerbung-mail").text
+            except:
+                continue
+            ansprechparner = extract_name(driver.find_element(By.ID, "detail-bewerbung-adresse"))
+
+            print(ansprechparner)
 
 
 def extract_name(element):
@@ -22,7 +33,7 @@ def extract_name(element):
     if unternehmen_pattern.search(lines[0]):
         return lines[1]
     else:
-        return lines[0] 
+        return lines[0]
 
 
-extract_email_and_name("a")
+extract_email_and_name(Json_Extractor.get_relevant_data())
