@@ -16,13 +16,18 @@ def extract_email_and_name(titel_arbeitgeber_refnr):
         try:
             if driver.find_element(By.ID, "kontaktdaten-captcha-image"):
                 input("captcha")
+            try:
+                email = driver.find_element(By.ID, "detail-bewerbung-mail").text
+            except:
+                continue
+            ansprechparner = extract_name(driver.find_element(By.ID, "detail-bewerbung-adresse"))
+            print(ansprechparner)
         except:
             try:
                 email = driver.find_element(By.ID, "detail-bewerbung-mail").text
             except:
                 continue
             ansprechparner = extract_name(driver.find_element(By.ID, "detail-bewerbung-adresse"))
-
             print(ansprechparner)
 
 
@@ -36,4 +41,5 @@ def extract_name(element):
         return lines[0]
 
 
-extract_email_and_name(Json_Extractor.get_relevant_data())
+if __name__ == "__main__":
+    extract_email_and_name(Json_Extractor.get_relevant_data())
