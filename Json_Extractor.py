@@ -38,8 +38,8 @@ def fetch_job_json():
 
 
 def extract_relevant_data(json_entry):
-    extracted_relevant_data = json_entry['titel'] + "," + json_entry['arbeitgeber'] + "," + json_entry['refnr']
-    return extracted_relevant_data
+    titel_arbeitgeber_refnr = json_entry['titel'] + "," + json_entry['arbeitgeber'] + "," + json_entry['refnr']
+    return titel_arbeitgeber_refnr
 
 
 def get_relevant_data():
