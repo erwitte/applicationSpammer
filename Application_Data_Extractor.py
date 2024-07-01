@@ -2,7 +2,7 @@ import re
 import Json_Extractor
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+from colorama import Fore
 
 
 def extract_email_and_name(titel_arbeitgeber_refnr):
@@ -15,14 +15,10 @@ def extract_email_and_name(titel_arbeitgeber_refnr):
         titel_arbeitgeber_ansprechpartner_email = []
         try:
             if driver.find_element(By.ID, "kontaktdaten-captcha-image"):
-                input("captcha")
-            try:
-                email = driver.find_element(By.ID, "detail-bewerbung-mail").text
-            except:
-                continue
-            ansprechparner = extract_name(driver.find_element(By.ID, "detail-bewerbung-adresse"))
-            print(ansprechparner)
-        except:
+                input(Fore.RED + "captcha") # user has to solve a captcha, press enter to continue
+        except Exception as e:
+            print("exception")
+        finally:
             try:
                 email = driver.find_element(By.ID, "detail-bewerbung-mail").text
             except:
