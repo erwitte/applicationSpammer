@@ -3,6 +3,7 @@ import Json_Extractor
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from colorama import Fore, Style
+import threading
 
 
 def extract_email_and_name(titel_arbeitgeber_refnr):
@@ -38,4 +39,7 @@ def extract_name(element):
 
 
 if __name__ == "__main__":
-    extract_email_and_name(Json_Extractor.get_relevant_data())
+
+    thread =threading.Thread(target=lambda: extract_email_and_name(Json_Extractor.get_relevant_data("Frontend")))
+    thread.start()
+    extract_email_and_name(Json_Extractor.get_relevant_data("Backend"))

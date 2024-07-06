@@ -2,7 +2,7 @@ import requests
 import Token
 
 
-def fetch_job_json():
+def fetch_job_json(job_title):
     token = Token.get_token()
     # Endpoint URL to fetch job listings
     job_search_url = 'https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/jobs'
@@ -14,7 +14,7 @@ def fetch_job_json():
 
     # Example query parameters
     params = {
-        "was": "Backend",
+        "was": job_title,
         'angebotsart': '1',  # Job offer type (1 = ARBEIT)
         'wo': 'Hannover',  # Location (Berlin in this case)
         'umkreis': '50',  # Radius around location in kilometers
@@ -42,8 +42,8 @@ def extract_relevant_data(json_entry):
     return titel_arbeitgeber_refnr
 
 
-def get_relevant_data():
-    job_data = fetch_job_json()
+def get_relevant_data(job_title):
+    job_data = fetch_job_json(job_title)
     relevant_data = []
     for index in range(len(job_data["stellenangebote"])):
         relevant_data.append(extract_relevant_data(job_data["stellenangebote"][index]))
