@@ -16,7 +16,7 @@ def fetch_job_json():
     params = {
         "was": "Backend",
         'angebotsart': '1',  # Job offer type (1 = ARBEIT)
-        'wo': 'Osnabrück',  # Location (Berlin in this case)
+        'wo': 'Hannover',  # Location (Berlin in this case)
         'umkreis': '50',  # Radius around location in kilometers
         'page': '1',  # Page number of results
         'size': '100',  # Number of results per page
